@@ -68,6 +68,7 @@ public class BarCard extends HabitCard
 
     private void init()
     {
+        setOrientation(VERTICAL);
         inflate(getContext(), R.layout.show_habit_bar, this);
         ButterKnife.bind(this);
 

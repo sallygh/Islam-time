@@ -24,8 +24,14 @@ import android.support.annotation.*;
 import android.util.*;
 import android.widget.*;
 
+import org.isoron.androidbase.utils.*;
+import org.isoron.uhabits.*;
 import org.isoron.uhabits.core.models.*;
 import org.isoron.uhabits.core.models.memory.*;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static org.isoron.androidbase.utils.InterfaceUtils.dpToPixels;
 
 public abstract class HabitCard extends LinearLayout
     implements ModelObservable.Listener
@@ -68,7 +74,7 @@ public abstract class HabitCard extends LinearLayout
     @Override
     protected void onAttachedToWindow()
     {
-        if(isInEditMode()) return;
+        if (isInEditMode()) return;
 
         super.onAttachedToWindow();
         refreshData();
@@ -98,6 +104,16 @@ public abstract class HabitCard extends LinearLayout
 
     private void init()
     {
-        if(!isInEditMode()) habit = new MemoryModelFactory().buildHabit();
+        int p16 = (int) dpToPixels(getContext(), 16);
+        int p4 = (int) dpToPixels(getContext(), 4);
+        setPadding(p16, p16, p4, p16);
+
+        StyledResources sres = new StyledResources(getContext());
+        setBackgroundColor(sres.getColor(R.attr.cardBackgroundColor));
+        if(SDK_INT >= LOLLIPOP) {
+            setElevation(dpToPixels(getContext(), 1));
+        }
+
+        if (!isInEditMode()) habit = new MemoryModelFactory().buildHabit();
     }
 }

@@ -21,7 +21,6 @@ package org.isoron.uhabits.activities.habits.show.views;
 
 import android.support.test.runner.*;
 import android.test.suitebuilder.annotation.*;
-import android.view.*;
 
 import org.isoron.uhabits.*;
 import org.isoron.uhabits.core.models.*;
@@ -45,11 +44,7 @@ public class ScoreCardTest extends BaseViewTest
         super.setUp();
         habit = fixtures.createLongHabit();
 
-        view = (ScoreCard) LayoutInflater
-            .from(targetContext)
-            .inflate(R.layout.show_habit, null)
-            .findViewById(R.id.scoreCard);
-
+        view = new ScoreCard(targetContext);
         view.setHabit(habit);
         view.refreshData();
         measureView(view, 800, 600);

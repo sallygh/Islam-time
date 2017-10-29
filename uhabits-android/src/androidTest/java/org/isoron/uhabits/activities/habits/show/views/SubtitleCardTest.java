@@ -21,7 +21,6 @@ package org.isoron.uhabits.activities.habits.show.views;
 
 import android.support.test.runner.*;
 import android.test.suitebuilder.annotation.*;
-import android.view.*;
 
 import org.isoron.uhabits.*;
 import org.isoron.uhabits.core.models.*;
@@ -47,11 +46,7 @@ public class SubtitleCardTest extends BaseViewTest
         habit = fixtures.createLongHabit();
         habit.setReminder(new Reminder(8, 30, WeekdayList.EVERY_DAY));
 
-        view = (SubtitleCard) LayoutInflater
-            .from(targetContext)
-            .inflate(R.layout.show_habit, null)
-            .findViewById(R.id.subtitleCard);
-
+        view = new SubtitleCard(targetContext);
         view.setHabit(habit);
         view.refreshData();
 

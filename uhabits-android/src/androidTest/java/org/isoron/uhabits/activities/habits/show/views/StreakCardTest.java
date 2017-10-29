@@ -21,7 +21,6 @@ package org.isoron.uhabits.activities.habits.show.views;
 
 import android.support.test.runner.*;
 import android.test.suitebuilder.annotation.*;
-import android.view.*;
 
 import org.isoron.uhabits.*;
 import org.isoron.uhabits.core.models.*;
@@ -45,11 +44,7 @@ public class StreakCardTest extends BaseViewTest
         super.setUp();
         habit = fixtures.createLongHabit();
 
-        view = (StreakCard) LayoutInflater
-            .from(targetContext)
-            .inflate(R.layout.show_habit, null)
-            .findViewById(R.id.streakCard);
-
+        view = new StreakCard(targetContext);
         view.setHabit(habit);
         view.refreshData();
 

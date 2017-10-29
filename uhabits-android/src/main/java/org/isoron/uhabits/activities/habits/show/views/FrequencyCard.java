@@ -67,6 +67,7 @@ public class FrequencyCard extends HabitCard
 
     private void init()
     {
+        setOrientation(VERTICAL);
         inflate(getContext(), R.layout.show_habit_frequency, this);
         ButterKnife.bind(this);
 

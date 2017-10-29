@@ -33,6 +33,8 @@ import org.isoron.uhabits.utils.*;
 
 import butterknife.*;
 
+import static org.isoron.androidbase.utils.InterfaceUtils.dpToPixels;
+
 public class HistoryCard extends HabitCard
 {
     @BindView(R.id.historyChart)
@@ -79,6 +81,11 @@ public class HistoryCard extends HabitCard
 
     private void init()
     {
+        int p16 = (int) dpToPixels(getContext(), 16);
+        int p4 = (int) dpToPixels(getContext(), 4);
+        setPadding(p16, p16, p4, 0);
+
+        setOrientation(VERTICAL);
         inflate(getContext(), R.layout.show_habit_history, this);
         ButterKnife.bind(this);
 

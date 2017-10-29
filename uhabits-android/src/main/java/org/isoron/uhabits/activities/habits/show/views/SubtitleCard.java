@@ -25,11 +25,17 @@ import android.content.res.*;
 import android.util.*;
 import android.widget.*;
 
+import org.isoron.androidbase.utils.*;
 import org.isoron.uhabits.R;
 import org.isoron.uhabits.core.models.*;
 import org.isoron.uhabits.utils.*;
 
 import butterknife.*;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static org.isoron.androidbase.utils.InterfaceUtils.dpToPixels;
+import static org.isoron.androidbase.utils.InterfaceUtils.isLayoutRtl;
 
 public class SubtitleCard extends HabitCard
 {
@@ -41,6 +47,12 @@ public class SubtitleCard extends HabitCard
 
     @BindView(R.id.reminderLabel)
     TextView reminderLabel;
+
+    public SubtitleCard(Context context)
+    {
+        super(context);
+        init();
+    }
 
     public SubtitleCard(Context context, AttributeSet attrs)
     {
@@ -72,6 +84,20 @@ public class SubtitleCard extends HabitCard
     {
         inflate(getContext(), R.layout.show_habit_subtitle, this);
         ButterKnife.bind(this);
+
+        int p10 = (int) dpToPixels(getContext(), 10);
+        int p15 = (int) dpToPixels(getContext(), 15);
+        int p60 = (int) dpToPixels(getContext(), 60);
+
+        if (isLayoutRtl(this)) setPadding(p10, p15, p60, p10);
+        else setPadding(p60, p15, p10, p10);
+
+        StyledResources sres = new StyledResources(getContext());
+        setBackgroundColor(sres.getColor(R.attr.headerBackgroundColor));
+        setOrientation(VERTICAL);
+        if(SDK_INT >= LOLLIPOP) {
+            setElevation(dpToPixels(getContext(), 2));
+        }
 
         if (isInEditMode()) initEditMode();
     }

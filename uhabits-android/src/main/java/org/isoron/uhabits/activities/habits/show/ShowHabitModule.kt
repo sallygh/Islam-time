@@ -17,22 +17,20 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.isoron.uhabits.activities.habits.show;
+package org.isoron.uhabits.activities.habits.show
 
-import org.isoron.uhabits.activities.*;
-import org.isoron.uhabits.core.ui.screens.habits.show.*;
-
-import dagger.*;
+import dagger.*
+import org.isoron.uhabits.activities.*
+import org.isoron.uhabits.core.ui.screens.habits.show.*
 
 @Module
-public abstract class ShowHabitModule
-{
+abstract class ShowHabitModule {
     @Binds
-    abstract ShowHabitBehavior.Screen getScreen(ShowHabitScreen screen);
+    abstract fun getScreen(screen: ShowHabitScreen): ShowHabitBehavior.Screen
 
     @Binds
-    abstract ShowHabitMenuBehavior.Screen getMenuScreen(ShowHabitScreen screen);
+    abstract fun getMenuScreen(screen: ShowHabitScreen): ShowHabitMenuBehavior.Screen
 
     @Binds
-    abstract ShowHabitMenuBehavior.System getSystem(HabitsDirFinder system);
+    abstract fun getSystem(system: HabitsDirFinder): ShowHabitMenuBehavior.System
 }

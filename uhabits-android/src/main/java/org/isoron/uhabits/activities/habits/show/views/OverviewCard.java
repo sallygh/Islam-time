@@ -35,6 +35,8 @@ import org.isoron.uhabits.utils.*;
 
 import butterknife.*;
 
+import static org.isoron.androidbase.utils.InterfaceUtils.dpToPixels;
+
 public class OverviewCard extends HabitCard
 {
     @NonNull
@@ -96,6 +98,12 @@ public class OverviewCard extends HabitCard
             HabitsApplication app = (HabitsApplication) appContext;
             taskRunner = app.getComponent().getTaskRunner();
         }
+
+        setOrientation(VERTICAL);
+        int p16 = (int) dpToPixels(getContext(), 16);
+        int p12 = (int) dpToPixels(getContext(), 12);
+        int p4 = (int) dpToPixels(getContext(), 4);
+        setPadding(p16, p12, p4, p16);
 
         inflate(getContext(), R.layout.show_habit_overview, this);
         ButterKnife.bind(this);
