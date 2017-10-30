@@ -44,8 +44,7 @@ public class FrequencyCardTest extends BaseViewTest
         super.setUp();
            habit = fixtures.createLongHabit();
 
-        view = new FrequencyCard(targetContext);
-        view.setHabit(habit);
+        view = new FrequencyCard(targetContext, habit, taskRunner);
         view.refreshData();
 
         measureView(view, 800, 600);

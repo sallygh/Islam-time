@@ -44,8 +44,7 @@ public class OverviewCardTest extends BaseViewTest
         super.setUp();
         habit = fixtures.createLongHabit();
 
-        view = new OverviewCard(targetContext);
-        view.setHabit(habit);
+        view = new OverviewCard(targetContext, habit);
         view.refreshData();
         measureView(view, 800, 300);
     }

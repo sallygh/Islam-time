@@ -44,8 +44,7 @@ public class HistoryCardTest extends BaseViewTest
         super.setUp();
         habit = fixtures.createLongHabit();
 
-        view = new HistoryCard(targetContext);
-        view.setHabit(habit);
+        view = new HistoryCard(targetContext, habit);
         view.refreshData();
 
         measureView(view, 800, 600);

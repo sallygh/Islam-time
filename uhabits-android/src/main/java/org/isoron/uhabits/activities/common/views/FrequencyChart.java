@@ -68,7 +68,7 @@ public class FrequencyChart extends ScrollableChart
     private boolean isBackgroundTransparent;
 
     @NonNull
-    private HashMap<Timestamp, Integer[]> frequency;
+    private HashMap<Timestamp, Integer[]> frequency = new HashMap<>();
     private int maxFreq;
 
     public FrequencyChart(Context context)

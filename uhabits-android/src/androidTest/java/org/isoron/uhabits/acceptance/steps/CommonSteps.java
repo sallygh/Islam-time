@@ -157,7 +157,8 @@ public class CommonSteps extends BaseUserInterfaceTest
                 break;
 
             case SHOW_HABIT:
-                onView(withId(R.id.subtitleCard)).check(matches(isDisplayed()));
+                onView(withClassName(endsWith("ShowHabitRootView")))
+                    .check(matches(isDisplayed()));
                 break;
 
             case EDIT_HABIT:

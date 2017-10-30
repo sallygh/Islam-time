@@ -21,7 +21,6 @@ package org.isoron.uhabits.activities.habits.show.views;
 
 import android.content.*;
 import android.support.annotation.*;
-import android.util.*;
 import android.widget.*;
 
 import org.isoron.uhabits.*;
@@ -49,15 +48,9 @@ public class HistoryCard extends HabitCard
     @Nullable
     private TaskRunner taskRunner;
 
-    public HistoryCard(Context context)
+    public HistoryCard(Context context, Habit habit)
     {
-        super(context);
-        init();
-    }
-
-    public HistoryCard(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
+        super(context, habit);
         init();
     }
 

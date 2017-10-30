@@ -22,7 +22,6 @@ package org.isoron.uhabits.activities.habits.show.views;
 import android.annotation.*;
 import android.content.*;
 import android.content.res.*;
-import android.util.*;
 import android.widget.*;
 
 import org.isoron.androidbase.utils.*;
@@ -34,8 +33,7 @@ import butterknife.*;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static org.isoron.androidbase.utils.InterfaceUtils.dpToPixels;
-import static org.isoron.androidbase.utils.InterfaceUtils.isLayoutRtl;
+import static org.isoron.androidbase.utils.InterfaceUtils.*;
 
 public class SubtitleCard extends HabitCard
 {
@@ -48,17 +46,12 @@ public class SubtitleCard extends HabitCard
     @BindView(R.id.reminderLabel)
     TextView reminderLabel;
 
-    public SubtitleCard(Context context)
+    public SubtitleCard(Context context, Habit habit)
     {
-        super(context);
+        super(context, habit);
         init();
     }
 
-    public SubtitleCard(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init();
-    }
 
     @Override
     protected void refreshData()

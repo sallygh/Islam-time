@@ -23,6 +23,7 @@ import android.graphics.*
 import android.support.annotation.*
 import android.support.design.widget.*
 import android.support.v7.widget.Toolbar
+import android.util.*
 import android.view.*
 import android.view.ViewGroup.LayoutParams.*
 import android.widget.*
@@ -95,5 +96,10 @@ fun View.dim(id: Int) = InterfaceUtils.getDimension(context, id)
 fun View.sp(value: Float) = InterfaceUtils.spToPixels(context, value)
 fun View.dp(value: Float) = InterfaceUtils.dpToPixels(context, value)
 fun View.str(id: Int) = resources.getString(id)
+fun TextView.setTextSizePx(size: Float) = setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
 val View.sres: StyledResources
     get() = StyledResources(context)
+
+fun View.setPadding(left: Float, top: Float, right: Float, bottom: Float) {
+    setPadding(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
+}

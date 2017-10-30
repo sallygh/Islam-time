@@ -44,8 +44,7 @@ public class StreakCardTest extends BaseViewTest
         super.setUp();
         habit = fixtures.createLongHabit();
 
-        view = new StreakCard(targetContext);
-        view.setHabit(habit);
+        view = new StreakCard(targetContext, habit, taskRunner);
         view.refreshData();
 
         measureView(view, 800, 600);

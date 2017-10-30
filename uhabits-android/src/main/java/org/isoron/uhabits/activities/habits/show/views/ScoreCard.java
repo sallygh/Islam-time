@@ -58,18 +58,11 @@ public class ScoreCard extends HabitCard
     @Nullable
     private Preferences prefs;
 
-    public ScoreCard(Context context)
+    public ScoreCard(Context context, Habit habit)
     {
-        super(context);
+        super(context, habit);
         init();
     }
-
-    public ScoreCard(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init();
-    }
-
     @NonNull
     public static DateUtils.TruncateField getTruncateField(int bucketSize)
     {

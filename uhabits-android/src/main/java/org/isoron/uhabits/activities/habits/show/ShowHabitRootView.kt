@@ -30,31 +30,29 @@ import org.isoron.androidbase.utils.*
 import org.isoron.uhabits.*
 import org.isoron.uhabits.activities.habits.show.views.*
 import org.isoron.uhabits.core.models.*
+import org.isoron.uhabits.core.tasks.*
 import org.isoron.uhabits.utils.*
 import javax.inject.*
 
 @ActivityScope
 class ShowHabitRootView @Inject constructor(
         @ActivityContext context: Context,
+        taskRunner: TaskRunner,
         private val habit: Habit
 ) : BaseRootView(context),
     ModelObservable.Listener {
 
-    private val frequencyCard = FrequencyCard(context)
-    private val streakCard = StreakCard(context)
-    private val subtitleCard = SubtitleCard(context)
-    private val overviewCard = OverviewCard(context)
-    private val scoreCard = ScoreCard(context)
-    private val historyCard = HistoryCard(context)
-    private val barCard = BarCard(context)
+    private val frequencyCard = FrequencyCard(context, habit, taskRunner)
+    private val streakCard = StreakCard(context, habit, taskRunner)
+    private val subtitleCard = SubtitleCard(context, habit)
+    private val overviewCard = OverviewCard(context, habit)
+    private val scoreCard = ScoreCard(context, habit)
+    private val historyCard = HistoryCard(context, habit)
+    private val barCard = BarCard(context, habit, taskRunner)
     private val tbar = buildToolbar()
-
     private var controller: Controller
 
     init {
-//        addView(View.inflate(getContext(), R.layout.show_habit, null))
-//        ButterKnife.bind(this)
-
         addView(RelativeLayout(context).apply {
             addAtTop(tbar)
             addBelow(ScrollView(context).apply {
@@ -117,15 +115,7 @@ class ShowHabitRootView @Inject constructor(
     }
 
     private fun initCards() {
-        subtitleCard.habit = habit
-        overviewCard.habit = habit
-        scoreCard.habit = habit
-        historyCard.habit = habit
-        streakCard.habit = habit
-        frequencyCard.habit = habit
-
-        if (habit.isNumerical) barCard.habit = habit
-        else barCard.visibility = View.GONE
+        barCard.visibility = View.GONE
     }
 
     interface Controller : HistoryCard.Controller {

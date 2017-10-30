@@ -21,7 +21,6 @@ package org.isoron.uhabits.activities.habits.show.views;
 
 import android.content.*;
 import android.support.annotation.*;
-import android.util.*;
 import android.widget.*;
 
 import org.isoron.androidbase.utils.*;
@@ -65,17 +64,12 @@ public class OverviewCard extends HabitCard
     @Nullable
     private TaskRunner taskRunner;
 
-    public OverviewCard(Context context)
+    public OverviewCard(Context context, Habit habit)
     {
-        super(context);
+        super(context, habit);
         init();
     }
 
-    public OverviewCard(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init();
-    }
 
     @Override
     protected void refreshData()
