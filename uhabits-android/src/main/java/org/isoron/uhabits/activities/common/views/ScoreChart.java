@@ -76,7 +76,6 @@ public class ScoreChart extends ScrollableChart
 
     private int primaryColor;
 
-    @Deprecated
     private int bucketSize = 7;
 
     private int backgroundColor;
@@ -123,7 +122,6 @@ public class ScoreChart extends ScrollableChart
         }
     }
 
-    @Deprecated
     public void setBucketSize(int bucketSize)
     {
         this.bucketSize = bucketSize;

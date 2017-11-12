@@ -58,10 +58,24 @@ fun RelativeLayout.addAtBottom(view: View,
 
 fun RelativeLayout.addAtTop(view: View,
                             width: Int = MATCH_PARENT,
-                            height: Int = WRAP_CONTENT) {
+                            height: Int = WRAP_CONTENT,
+                            applyCustomRules: (params: RelativeLayout.LayoutParams) -> Unit = {}) {
 
     view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
         addRule(ALIGN_PARENT_TOP)
+        applyCustomRules(this)
+    }
+    view.id = View.generateViewId()
+    this.addView(view)
+}
+
+fun RelativeLayout.addAtTopRight(view: View,
+                                 width: Int = MATCH_PARENT,
+                                 height: Int = WRAP_CONTENT) {
+
+    view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
+        addRule(ALIGN_PARENT_TOP)
+        addRule(ALIGN_PARENT_RIGHT)
     }
     view.id = View.generateViewId()
     this.addView(view)
@@ -77,7 +91,7 @@ fun View.showMessage(@StringRes stringId: Int) {
         val snackbar = Snackbar.make(this, stringId, Snackbar.LENGTH_SHORT)
         val tvId = android.support.design.R.id.snackbar_text
         val tv = snackbar.view.findViewById(tvId)
-        if(tv is TextView) tv.setTextColor(Color.WHITE)
+        if (tv is TextView) tv.setTextColor(Color.WHITE)
         snackbar.show()
     } catch (e: IllegalArgumentException) {
         return

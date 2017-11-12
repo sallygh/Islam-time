@@ -22,7 +22,6 @@ package org.isoron.uhabits.activities.habits.show
 import android.content.*
 import android.os.*
 import android.support.v7.widget.Toolbar
-import android.view.*
 import android.view.ViewGroup.LayoutParams.*
 import android.widget.*
 import org.isoron.androidbase.activities.*
@@ -30,14 +29,18 @@ import org.isoron.androidbase.utils.*
 import org.isoron.uhabits.*
 import org.isoron.uhabits.activities.habits.show.views.*
 import org.isoron.uhabits.core.models.*
+import org.isoron.uhabits.core.preferences.*
 import org.isoron.uhabits.core.tasks.*
 import org.isoron.uhabits.utils.*
+import org.isoron.uhabits.widgets.*
 import javax.inject.*
 
 @ActivityScope
 class ShowHabitRootView @Inject constructor(
         @ActivityContext context: Context,
         taskRunner: TaskRunner,
+        prefs: Preferences,
+        widgetUpdater: WidgetUpdater,
         private val habit: Habit
 ) : BaseRootView(context),
     ModelObservable.Listener {
@@ -46,7 +49,7 @@ class ShowHabitRootView @Inject constructor(
     private val streakCard = StreakCard(context, habit, taskRunner)
     private val subtitleCard = SubtitleCard(context, habit)
     private val overviewCard = OverviewCard(context, habit)
-    private val scoreCard = ScoreCard(context, habit)
+    private val scoreCard = ScoreCard(context, habit, prefs, taskRunner, widgetUpdater)
     private val historyCard = HistoryCard(context, habit)
     private val barCard = BarCard(context, habit, taskRunner)
     private val tbar = buildToolbar()
@@ -115,7 +118,7 @@ class ShowHabitRootView @Inject constructor(
     }
 
     private fun initCards() {
-        barCard.visibility = View.GONE
+        if (!habit.isNumerical) barCard.visibility = GONE
     }
 
     interface Controller : HistoryCard.Controller {

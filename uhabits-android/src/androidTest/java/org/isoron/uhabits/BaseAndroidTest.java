@@ -37,6 +37,7 @@ import org.isoron.uhabits.core.models.*;
 import org.isoron.uhabits.core.preferences.*;
 import org.isoron.uhabits.core.tasks.*;
 import org.isoron.uhabits.core.utils.*;
+import org.isoron.uhabits.widgets.*;
 import org.junit.*;
 
 import java.io.*;
@@ -76,6 +77,8 @@ public class BaseAndroidTest extends TestCase
 
     private boolean isDone = false;
 
+    protected WidgetUpdater widgetUpdater;
+
     @Override
     @Before
     public void setUp()
@@ -103,6 +106,7 @@ public class BaseAndroidTest extends TestCase
         taskRunner = appComponent.getTaskRunner();
         logger = appComponent.getHabitsLogger();
         modelFactory = appComponent.getModelFactory();
+        widgetUpdater = appComponent.getWidgetUpdater();
 
         prefs.clear();
 

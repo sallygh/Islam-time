@@ -44,7 +44,7 @@ public class ScoreCardTest extends BaseViewTest
         super.setUp();
         habit = fixtures.createLongHabit();
 
-        view = new ScoreCard(targetContext, habit);
+        view = new ScoreCard(targetContext, habit, prefs, taskRunner, widgetUpdater);
         view.refreshData();
         measureView(view, 800, 600);
     }

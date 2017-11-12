@@ -22,7 +22,8 @@ package org.isoron.uhabits.widgets
 import android.content.*
 import android.view.*
 import org.isoron.uhabits.activities.common.views.*
-import org.isoron.uhabits.activities.habits.show.views.*
+import org.isoron.uhabits.activities.common.views.TimeBucketSizeSpinner.Companion.BUCKET_SIZES
+import org.isoron.uhabits.activities.common.views.TimeBucketSizeSpinner.Companion.bucketSizeToTruncateField
 import org.isoron.uhabits.core.models.*
 import org.isoron.uhabits.core.preferences.*
 import org.isoron.uhabits.utils.*
@@ -39,10 +40,10 @@ class ScoreWidget(
             pendingIntentFactory.showHabit(habit)
 
     override fun refreshData(view: View) {
-        val size = ScoreCard.BUCKET_SIZES[prefs.defaultScoreSpinnerPosition]
+        val size = BUCKET_SIZES[prefs.defaultScoreSpinnerPosition]
         val scores = when(size) {
             1 -> habit.scores.toList()
-            else -> habit.scores.groupBy(ScoreCard.getTruncateField(size))
+            else -> habit.scores.groupBy(bucketSizeToTruncateField(size))
         }
 
         val widgetView = view as GraphWidgetView
