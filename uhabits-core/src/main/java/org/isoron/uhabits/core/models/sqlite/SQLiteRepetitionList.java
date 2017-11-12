@@ -128,6 +128,13 @@ public class SQLiteRepetitionList extends RepetitionList
             habit.getId());
     }
 
+    @NonNull
+    @Override
+    public Iterator<Repetition> iterator()
+    {
+        return list.iterator();
+    }
+
     @Override
     public long getTotalCount()
     {

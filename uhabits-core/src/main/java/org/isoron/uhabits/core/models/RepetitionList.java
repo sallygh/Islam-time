@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * The collection of {@link Repetition}s belonging to a habit.
  */
-public abstract class RepetitionList
+public abstract class RepetitionList implements Iterable<Repetition>
 {
     @NonNull
     protected final Habit habit;
@@ -187,7 +187,7 @@ public abstract class RepetitionList
     @NonNull
     public synchronized Repetition toggle(Timestamp timestamp)
     {
-        if(habit.isNumerical())
+        if (habit.isNumerical())
             throw new IllegalStateException("habit must NOT be numerical");
 
         Repetition rep = getByTimestamp(timestamp);
@@ -213,10 +213,39 @@ public abstract class RepetitionList
     public void toggle(Timestamp timestamp, int value)
     {
         Repetition rep = getByTimestamp(timestamp);
-        if(rep != null) remove(rep);
+        if (rep != null) remove(rep);
         add(new Repetition(timestamp, value));
         habit.invalidateNewerThan(timestamp);
     }
 
     public abstract void removeAll();
+
+    @NonNull
+    @Override
+    public abstract Iterator<Repetition> iterator();
+
+    public List<Repetition> getCountBy(DateUtils.TruncateField field)
+    {
+        List<Repetition> list = new ArrayList<>();
+        HashMap<Timestamp, ArrayList<Integer>> groups = new HashMap<>();
+
+        for (Repetition r : this)
+        {
+            Timestamp groupTimestamp = r.getTimestamp().truncate(field);
+            if (!groups.containsKey(groupTimestamp)) groups.put(groupTimestamp, new ArrayList<>());
+            int value = 1;
+            if (habit.isNumerical()) value = r.getValue();
+            groups.get(groupTimestamp).add(value);
+        }
+
+        for (Timestamp timestamp : groups.keySet())
+        {
+            int total = 0;
+            for (Integer v : groups.get(timestamp)) total += v;
+            list.add(new Repetition(timestamp, total));
+        }
+
+        Collections.sort(list, (r1, r2) -> r1.getTimestamp().compare(r2.getTimestamp()));
+        return list;
+    }
 }

@@ -20,11 +20,12 @@
 package org.isoron.uhabits.core.models;
 
 import org.apache.commons.lang3.builder.*;
+import org.isoron.uhabits.core.utils.*;
 
 import java.util.*;
 
-import static java.util.Calendar.*;
-import static org.isoron.uhabits.core.utils.StringUtils.*;
+import static java.util.Calendar.DAY_OF_WEEK;
+import static org.isoron.uhabits.core.utils.StringUtils.defaultToStringStyle;
 
 public final class Timestamp
 {
@@ -47,6 +48,21 @@ public final class Timestamp
     public Timestamp(GregorianCalendar cal)
     {
         this(cal.getTimeInMillis());
+    }
+
+    public Timestamp(int year, int month, int day)
+    {
+        GregorianCalendar cal = DateUtils.getStartOfTodayCalendar();
+        cal.set(year, month, day, 0, 0, 0);
+        this.unixTime = cal.getTimeInMillis();
+    }
+
+    /**
+     * Given two timestamps, returns whichever timestamp is the oldest one.
+     */
+    public static Timestamp oldest(Timestamp first, Timestamp second)
+    {
+        return first.unixTime < second.unixTime ? first : second;
     }
 
     public long getUnixTime()
@@ -81,14 +97,6 @@ public final class Timestamp
     public int hashCode()
     {
         return new HashCodeBuilder(17, 37).append(unixTime).toHashCode();
-    }
-
-    /**
-     * Given two timestamps, returns whichever timestamp is the oldest one.
-     */
-    public static Timestamp oldest(Timestamp first, Timestamp second)
-    {
-        return first.unixTime < second.unixTime ? first : second;
     }
 
     public Timestamp minus(int days)
@@ -146,5 +154,10 @@ public final class Timestamp
     public int getWeekday()
     {
         return toCalendar().get(DAY_OF_WEEK) % 7;
+    }
+
+    public Timestamp truncate(DateUtils.TruncateField field)
+    {
+        return new Timestamp(DateUtils.truncate(field, unixTime));
     }
 }

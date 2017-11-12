@@ -58,7 +58,7 @@ public class MemoryRepetitionList extends RepetitionList
         }
 
         Collections.sort(filtered,
-            (r1, r2) -> r1.getTimestamp().compare(r2.getTimestamp()));
+                         (r1, r2) -> r1.getTimestamp().compare(r2.getTimestamp()));
 
         return filtered;
     }
@@ -121,7 +121,13 @@ public class MemoryRepetitionList extends RepetitionList
     @Override
     public long getTotalCount()
     {
-        return list.size();
+        if (habit.isNumerical())
+        {
+            long total = 0;
+            for (Repetition r : this) total += r.getValue();
+            return total;
+        }
+        else return list.size();
     }
 
     @Override
@@ -129,5 +135,12 @@ public class MemoryRepetitionList extends RepetitionList
     {
         list.clear();
         getObservable().notifyListeners();
+    }
+
+    @NonNull
+    @Override
+    public Iterator<Repetition> iterator()
+    {
+        return list.iterator();
     }
 }
