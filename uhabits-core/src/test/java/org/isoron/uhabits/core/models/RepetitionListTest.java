@@ -191,24 +191,4 @@ public class RepetitionListTest extends BaseUnitTest
         Repetition rep = new Repetition(Timestamp.ZERO.plus(100), 20);
         assertThat(rep.toString(), equalTo("{timestamp: {unixTime: 8640000000}, value: 20}"));
     }
-
-    @Test
-    public void test_getCountBy_withNumerical()
-    {
-        Habit habit = fixtures.createNumericalHabit();
-        List<Repetition> list = habit.getRepetitions()
-                                     .getCountBy(DateUtils.TruncateField.WEEK_NUMBER);
-
-        Repetition r = list.get(0);
-        assertThat(r.getTimestamp(), equalTo(new Timestamp(2015, JANUARY, 11)));
-        assertThat(r.getValue(), equalTo(600 + 700 + 800));
-
-        r = list.get(1);
-        assertThat(r.getTimestamp(), equalTo(new Timestamp(2015, JANUARY, 18)));
-        assertThat(r.getValue(), equalTo(200 + 300 + 400 + 500));
-
-        r = list.get(2);
-        assertThat(r.getTimestamp(), equalTo(new Timestamp(2015, JANUARY, 25)));
-        assertThat(r.getValue(), equalTo(100));
-    }
 }

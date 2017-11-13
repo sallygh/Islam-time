@@ -45,8 +45,7 @@ public class BarChartTest extends BaseViewTest
         Habit habit = fixtures.createLongNumericalHabit();
         view = new BarChart(targetContext);
         Timestamp today = DateUtils.getToday();
-        CheckmarkList checkmarks = habit.getCheckmarks();
-        view.setCheckmarks(checkmarks.getByInterval(today.minus(20), today));
+        view.setCheckmarks(habit.getCheckmarks().getByInterval(today.minus(20), today));
         view.setColor(PaletteUtils.getColor(targetContext, habit.getColor()));
         view.setTarget(200.0);
         measureView(view, dpToPixels(300), dpToPixels(200));

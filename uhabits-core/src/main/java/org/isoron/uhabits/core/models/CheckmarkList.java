@@ -349,6 +349,32 @@ public abstract class CheckmarkList
         add(buildCheckmarksFromIntervals(reps, intervals));
     }
 
+    public List<Checkmark> getCountBy(DateUtils.TruncateField field)
+    {
+        List<Checkmark> list = new ArrayList<>();
+        HashMap<Timestamp, ArrayList<Integer>> groups = new HashMap<>();
+
+        Timestamp current = DateUtils.getToday();
+        for (int value : getAllValues())
+        {
+            Timestamp groupTimestamp = current.truncate(field);
+            if (!groups.containsKey(groupTimestamp)) groups.put(groupTimestamp, new ArrayList<>());
+            if (habit.isNumerical()) groups.get(groupTimestamp).add(value);
+            else if (value == CHECKED_EXPLICITLY) groups.get(groupTimestamp).add(1000);
+            current = current.minus(1);
+        }
+
+        for (Timestamp timestamp : groups.keySet())
+        {
+            int total = 0;
+            for (Integer v : groups.get(timestamp)) total += v;
+            list.add(new Checkmark(timestamp, total));
+        }
+
+        Collections.sort(list, (r1, r2) -> r2.getTimestamp().compare(r1.getTimestamp()));
+        return list;
+    }
+
     static final class Interval
     {
         final Timestamp begin;

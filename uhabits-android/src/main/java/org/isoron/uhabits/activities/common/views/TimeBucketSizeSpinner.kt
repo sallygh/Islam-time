@@ -60,6 +60,7 @@ class TimeBucketSizeSpinner(context: Context,
     companion object {
         val BUCKET_SIZES = intArrayOf(1, 7, 31, 92, 365)
         fun bucketSizeToTruncateField(size: Int): DateUtils.TruncateField {
+            if (size == 1) return DateUtils.TruncateField.DAY
             if (size == 7) return DateUtils.TruncateField.WEEK_NUMBER
             if (size == 31) return DateUtils.TruncateField.MONTH
             if (size == 92) return DateUtils.TruncateField.QUARTER

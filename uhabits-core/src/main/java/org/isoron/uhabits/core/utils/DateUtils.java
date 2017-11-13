@@ -212,6 +212,9 @@ public abstract class DateUtils
 
         switch (field)
         {
+            case DAY:
+                return timestamp;
+
             case MONTH:
                 cal.set(DAY_OF_MONTH, 1);
                 return cal.getTimeInMillis();
@@ -242,6 +245,6 @@ public abstract class DateUtils
 
     public enum TruncateField
     {
-        MONTH, WEEK_NUMBER, YEAR, QUARTER
+        DAY, MONTH, WEEK_NUMBER, YEAR, QUARTER
     }
 }

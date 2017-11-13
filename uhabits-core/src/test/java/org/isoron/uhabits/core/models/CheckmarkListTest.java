@@ -28,6 +28,7 @@ import java.util.*;
 
 import nl.jqno.equalsverifier.*;
 
+import static java.util.Calendar.JANUARY;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.IsEqual.*;
 import static org.isoron.uhabits.core.models.Checkmark.*;
@@ -341,6 +342,26 @@ public class CheckmarkListTest extends BaseUnitTest
         nonDailyHabit.getCheckmarks().writeCSV(writer);
 
         assertThat(writer.toString(), equalTo(expectedCSV));
+    }
+
+    @Test
+    public void test_getCountBy_withNumerical()
+    {
+        Habit habit = fixtures.createNumericalHabit();
+        List<Checkmark> list = habit.getCheckmarks()
+                                     .getCountBy(DateUtils.TruncateField.WEEK_NUMBER);
+
+        Checkmark c = list.get(2);
+        assertThat(c.getTimestamp(), equalTo(new Timestamp(2015, JANUARY, 11)));
+        assertThat(c.getValue(), equalTo(600 + 700 + 800));
+
+        c = list.get(1);
+        assertThat(c.getTimestamp(), equalTo(new Timestamp(2015, JANUARY, 18)));
+        assertThat(c.getValue(), equalTo(200 + 300 + 400 + 500));
+
+        c = list.get(0);
+        assertThat(c.getTimestamp(), equalTo(new Timestamp(2015, JANUARY, 25)));
+        assertThat(c.getValue(), equalTo(100));
     }
 
     private Timestamp day(int offset)

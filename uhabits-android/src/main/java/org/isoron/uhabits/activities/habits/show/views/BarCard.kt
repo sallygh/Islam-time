@@ -25,33 +25,39 @@ import android.widget.*
 import org.isoron.uhabits.*
 import org.isoron.uhabits.activities.common.views.*
 import org.isoron.uhabits.core.models.*
+import org.isoron.uhabits.core.preferences.*
 import org.isoron.uhabits.core.tasks.*
-import org.isoron.uhabits.core.utils.*
 import org.isoron.uhabits.utils.*
 
 class BarCard(
         context: Context,
         habit: Habit,
+        prefs: Preferences,
         private val taskRunner: TaskRunner
 ) : HabitCard(context, habit) {
 
     val chart = BarChart(context)
     val title = RegularSizeTextView(context, R.string.history)
+    val spinner = TimeBucketSizeSpinner(context, prefs).apply {
+        onBucketSizeSelected = {
+            refreshData()
+        }
+    }
 
     init {
-        orientation = LinearLayout.VERTICAL
-        addView(title, LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-            setMargins(0, 0, 0, dp(12f).toInt())
-        })
-        addView(chart, LayoutParams(MATCH_PARENT, dp(220.0f).toInt()))
+        addView(RelativeLayout(context).apply {
+            addAtTopRight(spinner, width = WRAP_CONTENT, height = dp(22f).toInt())
+            addAtTop(title) { it.setMargins(0, 0, 0, dp(12f).toInt()) }
+            addBelow(chart, title, height = dp(220f).toInt())
+        }, LayoutParams(MATCH_PARENT, MATCH_PARENT))
     }
 
     override fun refreshData() {
         taskRunner.execute(object : Task {
             override fun doInBackground() {
-                val today = DateUtils.getToday()
-                val checkmarks = habit.checkmarks.getByInterval(Timestamp.ZERO, today)
+                val checkmarks = habit.checkmarks.getCountBy(spinner.truncateField)
                 chart.setCheckmarks(checkmarks)
+                chart.setBucketSize(spinner.bucketSize)
             }
 
             override fun onPreExecute() {

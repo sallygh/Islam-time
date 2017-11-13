@@ -51,7 +51,7 @@ class ShowHabitRootView @Inject constructor(
     private val overviewCard = OverviewCard(context, habit)
     private val scoreCard = ScoreCard(context, habit, prefs, taskRunner, widgetUpdater)
     private val historyCard = HistoryCard(context, habit)
-    private val barCard = BarCard(context, habit, taskRunner)
+    private val barCard = BarCard(context, habit, prefs, taskRunner)
     private val tbar = buildToolbar()
     private var controller: Controller
 
@@ -79,7 +79,6 @@ class ShowHabitRootView @Inject constructor(
         controller = object : Controller {}
         displayHomeAsUp = true
         initToolbar()
-        initCards()
     }
 
     override fun getToolbar(): Toolbar {
@@ -115,10 +114,6 @@ class ShowHabitRootView @Inject constructor(
     override fun onDetachedFromWindow() {
         habit.observable.removeListener(this)
         super.onDetachedFromWindow()
-    }
-
-    private fun initCards() {
-        if (!habit.isNumerical) barCard.visibility = GONE
     }
 
     interface Controller : HistoryCard.Controller {
